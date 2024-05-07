@@ -1,10 +1,10 @@
 import express from 'express'
 import cors from 'cors'
-import colors from 'colors'
 import dotenv from 'dotenv'
 import connectDB from './db/connection.js'
 import jobRoutes from './routes/jobRoutes.js'
 import errorHandler from './middleware/errorMiddleware.js'
+import colors from 'colors'
 
 dotenv.config()
 

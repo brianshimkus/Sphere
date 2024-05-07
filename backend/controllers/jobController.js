@@ -1,10 +1,13 @@
 import asyncHandler from 'express-async-handler'
+import Job from '../models/jobModel.js'
 
 // @desc    Fetch all jobs
 // @route   GET /api/jobs
 // @access  Private
 const getJobs = asyncHandler(async (req, res) => {
-	res.status(200).json({ message: 'Get jobs' })
+	const jobs = await Job.find()
+
+	res.status(200).json(jobs)
 })
 
 // @desc    Create a job
