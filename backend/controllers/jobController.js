@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Job from '../models/jobModel.js'
+import User from '../models/userModel.js'
 
 // @desc    Fetch all jobs
 // @route   GET /api/jobs
@@ -51,6 +52,20 @@ const updateJob = asyncHandler(async (req, res) => {
 		throw new Error('Job not found')
 	}
 
+	const user = await User.findById(req.user._id)
+
+	// Check for user
+	if (!user) {
+		res.status(401)
+		throw new Error('User not found')
+	}
+
+	// Check if user is the job creator
+	if (job.user.toString() !== req.user._id.toString()) {
+		res.status(401)
+		throw new Error('User not authorized')
+	}
+
 	const updatedJob = await Job.findByIdAndUpdate(
 		req.params.id,
 		{
@@ -77,6 +92,20 @@ const deleteJob = asyncHandler(async (req, res) => {
 	if (!job) {
 		res.status(400)
 		throw new Error('Job not found')
+	}
+
+	const user = await User.findById(req.user._id)
+
+	// Check for user
+	if (!user) {
+		res.status(401)
+		throw new Error('User not found')
+	}
+
+	// Check if user is the job creator
+	if (job.user.toString() !== req.user._id.toString()) {
+		res.status(401)
+		throw new Error('User not authorized')
 	}
 
 	await job.deleteOne()
