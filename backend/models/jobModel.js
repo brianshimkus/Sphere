@@ -2,6 +2,11 @@ import mongoose from 'mongoose'
 
 const jobSchema = mongoose.Schema(
 	{
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: 'User',
+		},
 		role: { type: String, required: true },
 		company: { type: String, required: true },
 		location: { type: String, required: true },
