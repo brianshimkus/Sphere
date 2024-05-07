@@ -47,7 +47,7 @@ const updateJob = asyncHandler(async (req, res) => {
 	const job = await Job.findById(req.params.id)
 
 	if (!job) {
-		res.status(404)
+		res.status(400)
 		throw new Error('Job not found')
 	}
 
@@ -72,7 +72,16 @@ const updateJob = asyncHandler(async (req, res) => {
 // @route   DELETE /api/jobs
 // @access  Private
 const deleteJob = asyncHandler(async (req, res) => {
-	res.status(200).json({ message: `Delete job ${req.params.id}` })
+	const job = await Job.findById(req.params.id)
+
+	if (!job) {
+		res.status(400)
+		throw new Error('Job not found')
+	}
+
+	await job.deleteOne()
+
+	res.status(200).json({ id: req.params.id })
 })
 
 export { getJobs, createJob, updateJob, deleteJob }
