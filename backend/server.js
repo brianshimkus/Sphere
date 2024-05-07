@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import colors from 'colors'
 import dotenv from 'dotenv'
 import connectDB from './db/connection.js'
 import jobRoutes from './routes/jobRoutes.js'
@@ -22,5 +23,5 @@ app.use('/api/jobs', jobRoutes)
 app.use(errorHandler)
 
 app.listen(PORT, () => {
-	console.log(`Server listening on port ${PORT}`)
+	console.log(`Server listening on port ${PORT}`.yellow)
 })
