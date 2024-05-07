@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './db/connection.js'
 import jobRoutes from './routes/jobRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 import errorHandler from './middleware/errorMiddleware.js'
 import colors from 'colors'
 
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/jobs', jobRoutes)
+app.use('/api/users', userRoutes)
 
 app.use(errorHandler)
 
