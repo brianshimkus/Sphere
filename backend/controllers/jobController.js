@@ -14,11 +14,30 @@ const getJobs = asyncHandler(async (req, res) => {
 // @route   POST /api/jobs
 // @access  Private
 const createJob = asyncHandler(async (req, res) => {
-	if (!req.body.text) {
+	if (
+		!req.body.role ||
+		!req.body.company ||
+		!req.body.location ||
+		!req.body.locationType ||
+		!req.body.minSalary ||
+		!req.body.maxSalary ||
+		!req.body.description
+	) {
 		res.status(400)
 		throw new Error('Text is required')
 	}
-	res.status(200).json({ message: 'Create job' })
+
+	const job = await Job.create({
+		role: req.body.role,
+		company: req.body.company,
+		location: req.body.location,
+		locationType: req.body.locationType,
+		minSalary: req.body.minSalary,
+		maxSalary: req.body.maxSalary,
+		description: req.body.description,
+	})
+
+	res.status(200).json(job)
 })
 
 // @desc    Update job

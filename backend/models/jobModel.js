@@ -6,7 +6,8 @@ const jobSchema = mongoose.Schema(
 		company: { type: String, required: true },
 		location: { type: String, required: true },
 		locationType: { type: Boolean, required: true },
-		salaryRange: { type: Number, required: true, minimum: 0, maximum: 1000000 },
+		minSalary: { type: Number, required: true },
+		maxSalary: { type: Number, required: true },
 		description: { type: String, required: true },
 	},
 	{
