@@ -44,7 +44,28 @@ const createJob = asyncHandler(async (req, res) => {
 // @route   PUT /api/jobs/:id
 // @access  Private
 const updateJob = asyncHandler(async (req, res) => {
-	res.status(200).json({ message: `Update job ${req.params.id}` })
+	const job = await Job.findById(req.params.id)
+
+	if (!job) {
+		res.status(404)
+		throw new Error('Job not found')
+	}
+
+	const updatedJob = await Job.findByIdAndUpdate(
+		req.params.id,
+		{
+			role: req.body.role || job.role,
+			company: req.body.company || job.company,
+			location: req.body.location || job.location,
+			locationType: req.body.locationType || job.locationType,
+			minSalary: req.body.minSalary || job.minSalary,
+			maxSalary: req.body.maxSalary || job.maxSalary,
+			description: req.body.description || job.description,
+		},
+		{ new: true }
+	)
+
+	res.status(200).json(updatedJob)
 })
 
 // @desc    Delete job
